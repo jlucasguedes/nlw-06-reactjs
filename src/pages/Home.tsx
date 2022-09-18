@@ -16,7 +16,6 @@ export function Home() {
   let navigate = useNavigate();
   const { user, signInWithGoogle } = useAuth();
   const [roomCode, setRoomCode] = useState('');
-  const database = getDatabase();
 
   async function handleCreateRoom() {
     if (!user) {
@@ -33,17 +32,19 @@ export function Home() {
 
     const dbRef = ref(getDatabase());
     const room = await get(child(dbRef, `/rooms/${roomCode}`));
+
     if (!room.exists()) {
       alert("Room does not exists");
       return;
-    } else {
-      console.log(room.val());
-      navigate(`/rooms/${roomCode}`);
     }
 
+    if (room.val().endedtAt) {
+      console.log(room.val().endedtAt);
+      alert('Room already closed.');
+      return;
+    }
 
-
-
+    navigate(`/rooms/${roomCode}`);
   }
 
 

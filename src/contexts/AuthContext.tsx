@@ -1,5 +1,6 @@
 import { getAuth, signInWithPopup, onAuthStateChanged, GoogleAuthProvider } from "firebase/auth";
 import { createContext, ReactNode, useEffect, useState } from "react";
+
 type AuthContextType = {
   user: UserType | undefined,
   signInWithGoogle: () => Promise<void>;
